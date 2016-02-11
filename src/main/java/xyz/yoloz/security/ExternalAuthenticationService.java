@@ -35,7 +35,7 @@ public class ExternalAuthenticationService implements ExternalServiceAuthenticat
             throw new BadCredentialsException(INVALID_USER_PASSWORD);
         }
 
-        AuthenticationWithToken authenticationWithToken = new AuthenticationWithToken(userAccount, AuthorityUtils.commaSeparatedStringToAuthorityList(Constants.USER_ROLE));
+        AuthenticationWithToken authenticationWithToken = new AuthenticationWithToken(userAccount, password, AuthorityUtils.commaSeparatedStringToAuthorityList(Constants.USER_ROLE));
         authenticationWithToken.setAuthenticated(true);
         return authenticationWithToken;
     }
