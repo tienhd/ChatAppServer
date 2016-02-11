@@ -5,6 +5,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.authority.AuthorityUtils;
 import xyz.yoloz.model.UserAccount;
 import xyz.yoloz.repository.UserAccountRepository;
+import xyz.yoloz.util.Constants;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,7 +35,7 @@ public class ExternalAuthenticationService implements ExternalServiceAuthenticat
             throw new BadCredentialsException(INVALID_USER_PASSWORD);
         }
 
-        AuthenticationWithToken authenticationWithToken = new AuthenticationWithToken(userAccount, AuthorityUtils.commaSeparatedStringToAuthorityList("USER_ROLE"));
+        AuthenticationWithToken authenticationWithToken = new AuthenticationWithToken(userAccount, AuthorityUtils.commaSeparatedStringToAuthorityList(Constants.USER_ROLE));
         authenticationWithToken.setAuthenticated(true);
         return authenticationWithToken;
     }

@@ -35,8 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    anonymous().disable().
 //                    exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint());
         http.authorizeRequests().antMatchers(publicEndpoints()).permitAll();
-        http.authorizeRequests().antMatchers(apiEndpoints()).hasAnyRole(hasAccessRoles());
-        http.anonymous().disable();
+        http.authorizeRequests().antMatchers(apiEndpoints()).hasAnyAuthority(hasAccessAuthority());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.csrf().disable();
         http.headers().frameOptions().disable();
@@ -52,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new String[]{ApiController.AUTHENTICATE_URL + "/*", ApiController.METRIC_ENDPOINT + "/*"};
     }
 
-    private String[] hasAccessRoles() {
+    private String[] hasAccessAuthority() {
         return new String[]{Constants.USER_ROLE};
     }
 

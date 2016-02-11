@@ -10,6 +10,10 @@ public class AuthenticationWithToken extends PreAuthenticatedAuthenticationToken
         super(aPrincipal, aCredentials);
     }
 
+    public AuthenticationWithToken(Object aPrincipal, Collection<? extends GrantedAuthority> anAuthorities) {
+        super(aPrincipal, null , anAuthorities);
+    }
+
     public AuthenticationWithToken(Object aPrincipal, Object aCredentials, Collection<? extends GrantedAuthority> anAuthorities) {
         super(aPrincipal, aCredentials, anAuthorities);
     }
