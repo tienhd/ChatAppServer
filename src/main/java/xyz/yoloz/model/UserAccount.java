@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "user_account")
+@Table (name = "ca_user_account")
 public class UserAccount extends BaseEntity
 {
     @Column(name = "username")

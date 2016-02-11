@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import xyz.yoloz.util.Constants;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,26 +23,37 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
-                csrf().disable().
-                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().
-                    authorizeRequests().
-                    antMatchers(publicEndpoints()).hasAuthority("ROLE_ANONYMOUS").
-                    antMatchers(apiEndpoints()).hasAuthority("ROLE_USER").
-                    anyRequest().authenticated().
-                and().
-                    anonymous().disable().
-                    exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint());
+//        http.
+//                csrf().disable().
+//                sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+//                and().
+//                    authorizeRequests().
+//                    antMatchers(publicEndpoints()).hasAuthority("ROLE_ANONYMOUS").
+//                    antMatchers(apiEndpoints()).hasAuthority("ROLE_USER").
+//                    anyRequest().authenticated().
+//                and().
+//                    anonymous().disable().
+//                    exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint());
+        http.authorizeRequests().antMatchers(publicEndpoints()).permitAll();
+        http.authorizeRequests().antMatchers(apiEndpoints()).hasAnyRole(hasAccessRoles());
+        http.anonymous().disable();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+        http.exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint());
         http.addFilterBefore(new AuthenticationFilter(authenticationManager()), BasicAuthenticationFilter.class);
     }
 
     private String[] apiEndpoints() {
-        return new String[]{ApiController.API_V1_ENDPOINT};
+        return new String[]{ApiController.API_V1_ENDPOINT + "/*"};
     }
 
     private String[] publicEndpoints() {
-        return new String[]{ApiController.METRIC_ENDPOINT};
+        return new String[]{ApiController.AUTHENTICATE_URL + "/*", ApiController.METRIC_ENDPOINT + "/*"};
+    }
+
+    private String[] hasAccessRoles() {
+        return new String[]{Constants.USER_ROLE};
     }
 
     @Bean
