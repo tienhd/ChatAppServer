@@ -13,7 +13,7 @@ import xyz.yoloz.util.Constants;
  * Date: 9/29/15
  * Time: 10:12 AM
  */
-public class ExternalAuthenticationService implements ExternalServiceAuthenticator
+public class SystemUsernamePasswordAuthenticatorImpl implements ExternalServiceAuthenticator
 {
     private static final String INVALID_USER_PASSWORD = "Wrong password";
     private static final String INVALID_USER = "User not found";

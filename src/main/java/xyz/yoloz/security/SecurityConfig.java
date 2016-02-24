@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public ExternalServiceAuthenticator externalServiceAuthenticator() {
-        return new ExternalAuthenticationService();
+        return new SystemUsernamePasswordAuthenticatorImpl();
     }
 
     @Bean
