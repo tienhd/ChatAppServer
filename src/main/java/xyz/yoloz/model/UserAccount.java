@@ -13,6 +13,7 @@ public class UserAccount extends BaseEntity
     @Column(name = "password")
     String password;
 
+
     public String getUsername()
     {
         return username;
